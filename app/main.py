@@ -35,9 +35,10 @@ def edit_user(user_id: int, user: User):
 
 @app.delete("/api/delete/users/{user_id}", status_code=204)
 def delete_user(user_id: int):
-    if (u.user_id == user_id for u in users):
-        users.pop(user_id)
-        return
+    for u in users:
+        if u.user_id == user_id:
+            users.remove(u)
+            return
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist")
 
 @app.get("/api/health")
