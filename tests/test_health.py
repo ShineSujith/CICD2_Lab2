@@ -1,14 +1,8 @@
 #tests/test_health.py
 
-from fastapi.testclient import TestClient
-from app.main import app
-import pytest
+from conftests import client
 
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-def test_health(client):
+def test_health(client: client):
     result = client.get("/api/health")
     assert result.status_code == 200
-    assert result.json() == ["status : ok"]
+    assert result.json() == {"status" : "ok"}
