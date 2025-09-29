@@ -23,15 +23,17 @@ def add_user(user: User):
     users.append(user)
     return user
 
-@app.put("/api/users", status_code=status.HTTP_200_OK)
+@app.put("/api/users/{user_id}", status_code=status.HTTP_200_OK)
 def edit_user(user_id: int, user: User):
-    if (u.user_id == user_id for u in users):
-        users[user_id].name = user.name
-        users[user_id].email = user.email
-        users[user_id].age = user.age
-        users[user_id].student_id = user.student_id
-        return user
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    try:
+        if (u.user_id == user_id for u in users):
+            users[user_id].name = user.name
+            users[user_id].email = user.email
+            users[user_id].age = user.age
+            users[user_id].student_id = user.student_id
+            return user
+    except:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
 @app.delete("/api/delete/users/{user_id}", status_code=204)
 def delete_user(user_id: int):
@@ -42,5 +44,5 @@ def delete_user(user_id: int):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User does not exist")
 
 @app.get("/api/health")
-def post_health():
-    return {"status : ok"}
+def health():
+    return {"status" : "ok"}
