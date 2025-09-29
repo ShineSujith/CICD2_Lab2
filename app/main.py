@@ -45,4 +45,4 @@ def delete_user(user_id: int):
 
 @app.get("/api/health")
 def health():
-    return {"status : ok"}
+    return {"status" : "ok"}
