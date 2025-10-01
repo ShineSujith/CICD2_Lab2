@@ -25,15 +25,14 @@ def add_user(user: User):
 
 @app.put("/api/users/{user_id}", status_code=status.HTTP_200_OK)
 def edit_user(user_id: int, user: User):
-    try:
-        if (u.user_id == user_id for u in users):
-            users[user_id].name = user.name
-            users[user_id].email = user.email
-            users[user_id].age = user.age
-            users[user_id].student_id = user.student_id
-            return user
-    except:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+    for u in users:
+        if u.user_id == user_id:
+            if user_id == user.user_id:
+                users[users.index(u)] = user
+                return user
+            else:
+                return {"message" : "Can't update user_id value"}
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
 @app.delete("/api/delete/users/{user_id}", status_code=204)
 def delete_user(user_id: int):
