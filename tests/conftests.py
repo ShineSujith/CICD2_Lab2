@@ -6,4 +6,5 @@ import pytest
 
 @pytest.fixture
 def client():
+    """Creates a new instance of app for each test"""
     return TestClient(app)
